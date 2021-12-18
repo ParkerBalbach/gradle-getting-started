@@ -93,7 +93,7 @@ public class HerokuApplication {
     Random rnd = new Random();
     while(salt.length() < 18) {
       int index = (int) (rnd.nextFloat() * RANDCHARS.length());
-      salt.append(RANDCHARS.chartAt(index));
+      salt.append(RANDCHARS.charAt(index));
     }
     String saltStr = salt.toString();
     return saltStr;
