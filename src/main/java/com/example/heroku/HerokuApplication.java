@@ -58,7 +58,7 @@ public class HerokuApplication {
     try (Connection connection = dataSource.getConnection()) {
       Statement stmt = connection.createStatement();
       stmt.executeUpdate("CREATE TABLE IF NOT EXISTS ticks (tick timestamp)");
-      stmt.executeUpdate("INSERT INTO ticks VALUES (now())");
+      stmt.executeUpdate("INSERT INTO ticks VALUES (now(), '" + getRandomString() + "')");
       ResultSet rs = stmt.executeQuery("SELECT tick FROM ticks");
 
       ArrayList<String> output = new ArrayList<String>();
@@ -83,6 +83,18 @@ public class HerokuApplication {
       config.setJdbcUrl(dbUrl);
       return new HikariDataSource(config);
     }
+  }
+
+  public String getRandomString() {
+    String RANDCHARS = "ABCDEFGHIJKLMNOPQRSTUVWXYZ1234567890";
+    StringBuilder salt = new StringBuilder();
+    Random rnd = new Random();
+    while(salt.length() < 18) {
+      int index = (int) (rnd.nextFloat() * RANDCHARS.length());
+      salt.append(RANDCHARS.chartAt(index));
+    }
+    String saltStr = salt.toString();
+    return saltStr;
   }
 
 }
