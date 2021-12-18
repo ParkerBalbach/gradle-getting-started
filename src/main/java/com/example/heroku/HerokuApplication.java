@@ -40,7 +40,7 @@ import java.lang.StringBuilder;
 @SpringBootApplication
 public class HerokuApplication {
 
-  @Value("${spring.datasource.url}")
+  @Value("${JDBC_DATABASE_URL:}")
   private String dbUrl;
 
   @Autowired
